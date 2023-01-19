@@ -24,6 +24,7 @@ export default function Home({
   productivityVideos,
   popularVideos,
 }) {
+
   return (
     <div className={styles.container}>
       <Head>

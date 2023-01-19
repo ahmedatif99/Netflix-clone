@@ -10,7 +10,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 0px;
-  background: transparent;
+  background: transparent; /* make scrollbar transparent */
 }
 
 a {
@@ -62,7 +62,6 @@ button {
   margin: 0;
   border: 0px;
   outline: 0px;
-  color: var(--white10);
 }
 
 :root {
@@ -92,14 +91,4 @@ button {
 
   --blue: rgba(75, 85, 99, 1);
   --blue20: rgb(55, 65, 81);
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
 }
