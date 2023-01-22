@@ -26,7 +26,7 @@ const NavBar = () => {
     e.preventDefault();
     try {
       await magic.user.logout();
-      console.log(await magic.user.isLoggedIn());
+      // console.log(await magic.user.isLoggedIn());
       router.push('/login')
     } catch (err) {
       console.error(err);
