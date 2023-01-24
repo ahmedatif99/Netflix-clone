@@ -27,21 +27,29 @@ const Login = () => {
     e.preventDefault()
 
     if (email) {
-      if (email === 'ahmedahmed1919a@gmail.com') {
         try {
           setisLoading(true)
           const didtoken = await magic.auth.loginWithMagicLink({email})
           if (didtoken) {
-            router.push('/')
+            const res = await fetch('/api/login', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${didtoken}`,
+                'Content-Type': 'application/json',
+              }
+            });
+            const loggedInRes = await res.json();
+            if(loggedInRes.done){
+              console.log({loggedInRes})
+              router.push('/')
+            } else {
+              setisLoading(false);
+              setuserMsg("Sth went wrong logging in")
+            }
           }
         } catch(err) {
           console.error(err);
         }
-
-      } else {
-        setisLoading(false)
-        setuserMsg('Sth went wrong logging in')
-      }
 
     }else {
       setisLoading(false)

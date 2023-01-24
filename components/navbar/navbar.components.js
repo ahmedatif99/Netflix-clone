@@ -35,7 +35,9 @@ const NavBar = () => {
 
   const getMagicData = async () => {
     try {
-      const {email} = await magic.user.getMetadata();
+      const {email, issuer} = await magic.user.getMetadata();
+      const didtoken = await magic.user.getIdToken();
+      // console.log({didtoken})
       email && setUsername(email);
     } catch (err) {
       console.error('Error', err);
