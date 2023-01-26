@@ -40,7 +40,6 @@ const Login = () => {
             });
             const loggedInRes = await res.json();
             if(loggedInRes.done){
-              console.log({loggedInRes})
               router.push('/')
             } else {
               setisLoading(false);

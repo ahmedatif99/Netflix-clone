@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import Modal from 'react-modal'
 import clsx from "classnames"
@@ -35,7 +36,10 @@ export async function getStaticPaths () {
 
 const Video = ({ video }) => {
     const router = useRouter()
-    const { videoId } = router.query;
+    const videoId = router.query.videoId;
+
+    const [toggleLike, setToggleLike] = useState(false);
+    const [toggleDisLike, setToggleDisLike] = useState(false);
 
     const {
         title,
@@ -43,7 +47,54 @@ const Video = ({ video }) => {
         description,
         channelTitle,
         statistics: { viewCount } = { viewCount: 0 },
-      } = video;
+    } = video;
+
+    const runRatingService = async (favourited) => {
+        return await fetch('/api/stats', {
+            method: 'POST',
+            body: JSON.stringify({
+                videoId, 
+                favourited,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    }
+
+    const handleToggleDisLike = async () => {
+        const val = !toggleDisLike;
+        await runRatingService(val ? 0 : 1)
+        setToggleDisLike(!toggleDisLike)
+        setToggleLike(toggleDisLike)
+    }
+
+    const handleToggleLike = async () => {
+        const val = !toggleLike;
+        await runRatingService(val ? 1 : 0)
+        setToggleLike(val)
+        setToggleDisLike(toggleLike)
+    }
+
+    const videoData = async () => {
+        const response = await fetch(`/api/stats?videoId=${videoId}`, {
+            method: 'GET',
+        });
+        const data = await response.json();
+        if (data.length > 0) {
+            const favourited = data[0].favourited;
+            if (favourited === 1) {
+              setToggleLike(true);
+            } else if (favourited === 0) {
+              setToggleDisLike(true);
+            }
+          }
+    }
+
+    useEffect(() => {
+        videoData()
+    }, []);
+
   return (
     <div className={styles.container}>
         <NavBar />
@@ -66,15 +117,15 @@ const Video = ({ video }) => {
 
             <div className={styles.likeDislikeBtnWrapper}>
                 <div className={styles.likeBtnWrapper}>
-                    <button>
+                    <button onClick={handleToggleLike} >
                       <div className={styles.btnWrapper}>
-                        <Like/>
+                        <Like selected={toggleLike} />
                       </div>
                     </button>
                 </div>
-                <button>
+                <button onClick={handleToggleDisLike} >
                     <div className={styles.btnWrapper}>
-                        <DisLike />
+                        <DisLike selected={toggleDisLike} />
                     </div>
                 </button>
             </div>
