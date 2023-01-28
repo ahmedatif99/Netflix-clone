@@ -69,11 +69,12 @@
 
 .username {
   font-size: 1rem;
+  padding-right: 1rem;
 }
 
 .navDropdown {
   position: absolute;
-  margin-left: auto;
+  right: 4rem;
   margin-top: 0.5rem /* 8px */;
   padding-top: 0.5rem /* 8px */;
   padding-bottom: 0.5rem /* 8px */;

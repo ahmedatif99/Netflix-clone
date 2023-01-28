@@ -84,6 +84,7 @@ const NavBar = () => {
               onClick={() => setshowDropdown(!showDropdown)}
             >
               <p className={styles.username}>{username}</p>
+              <Image className={styles.avatarImg} src={"/static/avatar.png"} alt="Avatar" width="50" height="50" />
               <Image
                 src={"/static/expand_more.svg"}
                 alt="Expand more"
