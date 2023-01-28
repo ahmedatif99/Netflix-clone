@@ -25,8 +25,10 @@ export async function getServerSideProps(context) {
   const travelVideos = await getVideos("Travel");
   const productivityVideos = await getVideos("Productivity");
   const popularVideos = await getPopularVideos();
+  const bannerVideos = [...disneyVideos, ...travelVideos, ...productivityVideos, ...popularVideos];
+  const bannerRandom = await bannerVideos[Math.floor(Math.random() * bannerVideos.length)];
   return {
-    props: { disneyVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos },
+    props: { disneyVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos, bannerRandom },
   };
 }
 
@@ -35,8 +37,21 @@ export default function Home({
   travelVideos,
   productivityVideos,
   popularVideos,
-  watchItAgainVideos = []
+  watchItAgainVideos = [],
+  bannerRandom = [
+    {
+      id: "4zH5iYM4wJo", 
+      title: "Clifford the red dog", 
+      description: "a very cute dog", 
+      imgUrl: "/static/clifford.webp"
+    },
+  ]
 }) {
+  const id = bannerRandom.id;
+  const title = bannerRandom.title.substring(0, bannerRandom.title.indexOf('|'));
+  const description = bannerRandom.description.split(/\s+/).slice(0, 6).join(" ");
+  const imgUrl = bannerRandom.imgUrl;
+  // const { id, title.substring(0, title.indexOf('|')), description.split(/\s+/).slice(0, 6).join(" "), imgUrl } = bannerRandom;
 
   return (
     <div className={styles.container}>
@@ -49,10 +64,10 @@ export default function Home({
       <div className={styles.main}>
         <NavBar username="ahmedatif" />
         <Banner
-          videoId="4zH5iYM4wJo"
-          title="Cliford the red dog"
-          subTitle="a very cute dog"
-          imgUrl="/static/clifford.webp"
+          videoId={id}
+          title={title}
+          subTitle={description}
+          imgUrl={imgUrl}
         />
         <div className={styles.sectionWrapper}>
           <SectionCards title="Disney" videos={disneyVideos} size="large" />
