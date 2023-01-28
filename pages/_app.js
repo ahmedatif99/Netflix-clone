@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { magic } from '../lib/magic-client';
 import Loading from '../components/loading';
 
 import '../styles/globals.css'
@@ -8,19 +7,6 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [isLoading, setisLoading] = useState(false);
-
-  const checkLogin = async () => {
-    const isLoggedIn = await magic.user.isLoggedIn();
-    if(isLoggedIn) {
-      router.push('/')
-    } else {
-      router.push('/login')
-    }
-  }
-
-  useEffect(() => {
-    checkLogin()
-  }, []);
 
 useEffect(() => {
   const handleComplete = () => {

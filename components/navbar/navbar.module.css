@@ -7,7 +7,7 @@
   --gradient-from: var(--black);
   --gradient-stops: var(--gradient-from), var(--gradient-to, rgba(0, 0, 0, 0));
   width: 100%;
-  z-index: 50;
+  z-index: 5000;
 }
 
 .wrapper {

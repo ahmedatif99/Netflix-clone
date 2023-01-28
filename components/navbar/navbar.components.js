@@ -58,8 +58,8 @@ const NavBar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <a className={styles.logoLink} href="">
-          <div className={styles.logoWrapper}>
+        <Link className={styles.logoLink} href="">
+          <div className={styles.logoWrapper} onClick={handleOnClickHome}>
             <Image
               src={"/static/netflix.svg"}
               alt="Netflix Logo"
@@ -67,7 +67,7 @@ const NavBar = () => {
               height={"34"}
             />
           </div>
-        </a>
+        </Link>
 
         <ul className={styles.navItems}>
           <li className={styles.navItem} onClick={handleOnClickHome}>

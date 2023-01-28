@@ -11,15 +11,7 @@ import styles from "../styles/Home.module.css";
 
 export async function getServerSideProps(context) {
   const { userId, token } = await useRedirectUser(context);
-  if(!userId) {
-    return {
-        props: {},
-        redirect: {
-            destination: '/login',
-            permanent: false,
-        },
-    }
-  } 
+
   const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
   const disneyVideos = await getVideos("disney trailer");
   const travelVideos = await getVideos("Travel");
@@ -51,8 +43,6 @@ export default function Home({
   const title = bannerRandom.title.substring(0, bannerRandom.title.indexOf('|'));
   const description = bannerRandom.description.split(/\s+/).slice(0, 6).join(" ");
   const imgUrl = bannerRandom.imgUrl;
-  // const { id, title.substring(0, title.indexOf('|')), description.split(/\s+/).slice(0, 6).join(" "), imgUrl } = bannerRandom;
-
   return (
     <div className={styles.container}>
       <Head>
@@ -71,7 +61,7 @@ export default function Home({
         />
         <div className={styles.sectionWrapper}>
           <SectionCards title="Disney" videos={disneyVideos} size="large" />
-          <SectionCards title="Watch Again" videos={watchItAgainVideos} size="small" />
+          {watchItAgainVideos.length > 0 ? <SectionCards title="Watch Again" videos={watchItAgainVideos} size="small" /> : null}
           <SectionCards title="Travel" videos={travelVideos} size="small" />
           <SectionCards
             title="Productivity"
